@@ -1,0 +1,11 @@
+#!/data/data/com.termux/files/usr/bin/bash
+echo "=== Starting Oppo A17 cleanup ==="
+rish_auto "pm trim-caches 200M"
+rish_auto "am force-stop com.android.providers.contacts"
+rish_auto "am force-stop com.oppo.launcher"
+rish_auto "am kill-all"
+rish_auto "dumpsys battery reset"
+rish_auto "dumpsys batterystats --reset"
+rish_auto "pm trim-caches 100M"
+rish_auto "dumpsys battery | grep temperature"
+echo "=== Cleanup complete! Reboot now ==="

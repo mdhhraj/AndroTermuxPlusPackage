@@ -1,0 +1,27 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# Permanent unified Termux menu
+
+SCRIPT_DIR="$HOME/bin"
+SCRIPTS=($(ls "$SCRIPT_DIR"/*.sh 2>/dev/null | grep -v 'mymenu'))
+
+while true; do
+    clear
+    echo "===== ANDRO TERMUX+ TOOL MENU ====="
+    for i in "${!SCRIPTS[@]}"; do
+        printf "%d) %s\n" $((i+1)) "$(basename "${SCRIPTS[i]}")"
+    done
+    echo "0) Exit"
+    read -p "Choose a script to run: " choice
+
+    if [[ "$choice" == "0" ]]; then
+        echo "Exiting menu..."
+        break
+    elif [[ "$choice" -ge 1 && "$choice" -le ${#SCRIPTS[@]} ]]; then
+        SCRIPT="${SCRIPTS[$((choice-1))]}"
+        echo "Running $(basename "$SCRIPT")..."
+        bash "$SCRIPT"
+        read -p "Press Enter to return to menu..."
+    else
+        read -p "Invalid choice! Press Enter to try again..."
+    fi
+done
